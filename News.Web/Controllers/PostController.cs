@@ -24,5 +24,11 @@ namespace News.Web.Controllers
             var post = await _postService.GetById(id);
             return View(post);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetByCategory(int id)
+        {
+            var posts = await _postService.GetByCategory(id);
+            return View(posts);
+        }
     }
 }

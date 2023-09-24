@@ -13,5 +13,6 @@ namespace News.Web.Service.Posts
         Task<int> Update(UpdatePostDto dto);
         Task<PostViewModel> GetById(int id);
         Task<List<PostViewModel>> GetAll();
+        Task<List<PostViewModel>> GetByCategory(int id);
     }
 }

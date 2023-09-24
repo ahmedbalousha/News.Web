@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using News.Dtos.Helpers;
 using News.Exceptions;
 using News.Services;
@@ -57,7 +58,6 @@ namespace News.Web.Service.Posts
             var postVM = _mapper.Map<PostViewModel>(post);
             return postVM;
         }      
-
         public async Task<int> Delete(int id)
         {
             var Post = await _db.Posts.SingleOrDefaultAsync(x => x.Id == id);
@@ -72,23 +72,14 @@ namespace News.Web.Service.Posts
         }
         public async Task<int> Create(CreatePostDto dto)
         {
-            
             var post = _mapper.Map<Post>(dto);
             if (dto.Image != null)
             {
                 post.ImageUrl = await _fileService.SaveFile(dto.Image, "Images");
             }
-           
-
             await _db.Posts.AddAsync(post);
             await _db.SaveChangesAsync();
-
-            
-            
             return post.Id;
-
-
-
         }
         public async Task<UpdatePostDto> Get(int id)
         {
@@ -100,7 +91,6 @@ namespace News.Web.Service.Posts
             return _mapper.Map<UpdatePostDto>(post);
 
         }
-
         public async Task<int> Update(UpdatePostDto dto)
         {
            
@@ -121,6 +111,13 @@ namespace News.Web.Service.Posts
 
 
 
+        }
+
+        public async Task<List<PostViewModel>> GetByCategory (int id)
+        {
+            var posts = await _db.Posts.Include(x => x.Category).Where(x => x.CategoryId == id).ToListAsync();
+            var postVM =  _mapper.Map<List<PostViewModel>>(posts);
+            return postVM;
         }
     }
 }

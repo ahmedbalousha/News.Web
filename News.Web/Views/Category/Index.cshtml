@@ -1,0 +1,19 @@
+﻿@model List<CategoryViewModel>
+
+<h1>تصنيفات الأخبار</h1>
+
+@if (Model.Any())
+{
+
+
+        @foreach (var category in Model)
+        {
+            <table class="table table-hover">
+            <tr>
+            <th>
+                <a asp-controller="Post" asp-action="GetByCategory" asp-route-id="@category.Id"> @category.Name </a>
+                </th>
+            </tr>
+            </table>
+        }
+}

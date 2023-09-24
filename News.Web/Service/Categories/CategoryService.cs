@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News.Dtos.Helpers;
 using News.Exceptions;
@@ -41,18 +42,19 @@ namespace News.Web.Service.Categories
             };
             return result;
         }
+        public async Task<List<CategoryViewModel>> GetAll()
+        {
+            var categories = await _db.Categories.ToListAsync();
+            var categoriesVM = _mapper.Map<List<CategoryViewModel>>(categories);
+
+            return categoriesVM;
+        }
         public async Task<List<CategoryViewModel>> GetCategoryList()
         {
             var categories = await _db.Categories.ToListAsync();
             return _mapper.Map<List<CategoryViewModel>>(categories);
         }
-        public async Task<List<CategoryViewModel>> GetAll()
-        {
-            var category = await _db.Posts.ToListAsync();
-            var categoryVM = _mapper.Map<List<CategoryViewModel>>(category);
-
-            return categoryVM;
-        }
+        
         public async Task<CategoryViewModel> GetById(int id)
         {
             var category = await _db.Posts.FindAsync(id);

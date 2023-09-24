@@ -2,6 +2,7 @@
 
 namespace News.Web.Controllers
 {
+
     public class ControllerBase : Controller
     {
         public IActionResult Index()
