@@ -1,0 +1,44 @@
+﻿@model List<PostViewModel>
+
+<h1>قائمة الأخبار</h1>
+
+<hr />
+
+<br />
+
+
+@if (Model.Any())
+{
+
+    
+
+        @foreach (var post in Model)
+        {
+        <div class="card m-2" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img style="width:150px;height:200px; object-fit:cover; border-radius:20%;" src="~/Images/@post.ImageUrl" />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@post.Title</h5>
+                        <p class="card-text">
+
+                            <a asp-controller="Post" asp-action="Get" asp-route-id="@post.Id"> عرض تفاصيل الخبر</a>
+                           
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">@post.CreatedAt</small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text">@post.Category.Name</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        }
+    
+}
